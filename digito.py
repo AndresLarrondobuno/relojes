@@ -3,9 +3,13 @@ from led import Led
 class Digito:
     mapaDigitosACantidadLeds = {0:6, 1:2, 2:5, 3:5, 4:5, 5:5, 6:5, 7:3, 8:7, 9:5}
 
-    def __init__(self, numeroARepresentar = 0):
+    def __init__(self):
         self.leds = [ Led() for x in range(7) ]
-        self.ledsAEncender = self.setLedsAEncender(numeroARepresentar)
+        self.ledsAEncender = None
+
+
+    def __repr__(self):
+        return f"D:{self.leds}"
 
 
     def getCantidadDeLedsAEncender(self, numeroARepresentar):

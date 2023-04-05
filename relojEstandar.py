@@ -7,6 +7,7 @@ class RelojEstandar:
     def __init__(self):
         self.segundosTranscurridos = 0
         self.horas, self.minutos, self.segundos = 0, 0, 0
+ 
         self.digitos = { 
             'digitosHoras': [Digito(), Digito()],
             'digitosMinutos' : [Digito(), Digito()],
@@ -49,19 +50,18 @@ class RelojEstandar:
     def setDigitos(self):
         valorSexagesimal = ConvertidorDeUnidades.convertirSegundosASexagesimal(self.segundosTranscurridos)
         horas, minutos, segundos = valorSexagesimal['horas'], valorSexagesimal['minutos'], valorSexagesimal['segundos']
+        #obtener los numeros a representar de cada digito de cada campo
         numeroARepresentarHoras = ConvertidorDeUnidades.enteroADigitos(horas)
         numeroARepresentarMinutos = ConvertidorDeUnidades.enteroADigitos(minutos)
         numeroARepresentarSegundos = ConvertidorDeUnidades.enteroADigitos(segundos)
         numerosOrdenados = [numeroARepresentarHoras, numeroARepresentarMinutos, numeroARepresentarSegundos]
         
         #con esos numeros setear los digitos
-        for campo, numeroARepresentar in zip(self.digitos, numerosOrdenados):
+        for campo, numeroARepresentar in zip(self.digitos.keys(), numerosOrdenados):
             self.setDigito(campo, numeroARepresentar)
-    
 
-    def setDigito(self, campo, numeroARepresentar):
-        #obtener el numero a representar de cada digito del campo
-        numerosARepresentar = ConvertidorDeUnidades.enteroADigitos(numeroARepresentar)
+
+    def setDigito(self, campo, numerosARepresentar):
         #modificar atributo 'ledsAEncender' de Digito
         self.digitos[campo][0].setLedsAEncender(numerosARepresentar[0])
         self.digitos[campo][1].setLedsAEncender(numerosARepresentar[1])
@@ -81,13 +81,15 @@ class RelojEstandar:
                 digito.apagar()
     
 
-    def getGastoEnergetico(self, segundosTranscurridos):
-        gastoEnergetico = self.encenderDigitos()#primer pantalla
+    def getGastoEnergetico(self, segundos):
+        gastoEnergetico = 0
 
-        for segundo in range(1, segundosTranscurridos):
+        for segundo in range(segundos + 1):
+            self.setDigitos()#setea digitos utilizando los valores enteros de cada campo[(HH),(MM),(SS)]
+            for campo in self.digitos.values():
+                for digito in campo:
+                    gastoEnergetico += digito.encenderLeds() 
             self.incrementarSegundo()
-            self.setDigitos()
-            for digito in self.digitos:
-                gastoEnergetico += digito.encenderLeds()#setea digitos utilizando los valores enteros de cada campo
-                
+            self.apagarDigitos()
+
         return gastoEnergetico
