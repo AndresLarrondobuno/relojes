@@ -2,9 +2,9 @@ class ConvertidorDeUnidades:
 
     def convertirSegundosASexagesimal(segundos):
         horas = segundos // 3600
-        segundos_restantes = segundos - horas * 3600
+        segundos_restantes = segundos % 3600
+        segundos = segundos_restantes % 60
         minutos = segundos_restantes // 60
-        segundos -= minutos * 60
         return {"horas":horas, "minutos":minutos, "segundos":segundos}
 
 

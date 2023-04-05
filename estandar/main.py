@@ -2,4 +2,4 @@ from relojEstandar import RelojEstandar
 
 if __name__ == "__main__":
     relojEstandar = RelojEstandar()
-    print(relojEstandar.getGastoEnergetico(4))
+    print(relojEstandar.getGastoEnergetico(86400))
