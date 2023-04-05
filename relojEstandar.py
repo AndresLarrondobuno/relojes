@@ -20,7 +20,7 @@ class RelojEstandar:
 
 
     def __repr__(self) -> str:
-        return f"{self.horas} : {self.minutos} : {self.segundos}"
+        return f"h: {self.horas} m: {self.minutos} m: {self.segundos}"
 
 
     def incrementarSegundo(self):
