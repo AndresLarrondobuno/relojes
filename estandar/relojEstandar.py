@@ -51,7 +51,7 @@ class RelojEstandar:
         valorSexagesimal = ConvertidorDeUnidades.convertirSegundosASexagesimal(self.segundosTranscurridos)
         horas, minutos, segundos = valorSexagesimal['horas'], valorSexagesimal['minutos'], valorSexagesimal['segundos']
         #obtener los numeros a representar de cada digito de cada campo
-        numeroARepresentarHoras = ConvertidorDeUnidades.enteroADigitos(horas)
+        numeroARepresentarHoras = ConvertidorDeUnidades.enteroADigitos(horas) #metodo llamado 3 veces considerar for
         numeroARepresentarMinutos = ConvertidorDeUnidades.enteroADigitos(minutos)
         numeroARepresentarSegundos = ConvertidorDeUnidades.enteroADigitos(segundos)
         numerosOrdenados = [numeroARepresentarHoras, numeroARepresentarMinutos, numeroARepresentarSegundos]
