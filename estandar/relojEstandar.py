@@ -1,5 +1,5 @@
-from digito import Digito
-from convertidorDeUnidades import ConvertidorDeUnidades
+from estandar.digito import Digito
+from estandar.convertidorDeUnidades import ConvertidorDeUnidades
 
 class RelojEstandar:
     maximoHoras, maximoMinutos, maximoSegundos = 23, 59, 59
@@ -20,7 +20,7 @@ class RelojEstandar:
 
 
     def __repr__(self) -> str:
-        return f"h: {self.horas} m: {self.minutos} m: {self.segundos}"
+        return f"h: {self.horas} m: {self.minutos} s: {self.segundos}"
 
 
     def incrementarSegundo(self):
@@ -93,3 +93,4 @@ class RelojEstandar:
             self.apagarDigitos()
 
         return gastoEnergetico
+

@@ -7,7 +7,7 @@ class Led:
 
     def __repr__(self) -> str:
         if self.encendido:
-            return f"{self.posicion}"
+            return "T"
         return "F"
     
 

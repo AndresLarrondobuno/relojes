@@ -1,4 +1,4 @@
-from led import Led
+from premium.led import Led
 
 
 class Digito:
@@ -17,18 +17,22 @@ class Digito:
 
     def __init__(self):
         self.leds = [ Led(posicion) for posicion in Digito.posiciones ]
-        self.ledsAEncender = self.leds
+        self.ledsAEncender = self.getLedsAEncender(self.getPosicionesDeLedsAEncender(0))
         self.ledsAApagar = set()
 
 
     def __repr__(self):
         return f"D:{self.leds}"
+    
+
+    def getLedsEncendidos(self):
+        return {led for led in self.leds if led.encendido}
 
 
     def getLedsAEncender(self, posiciones):
         ledsAEncender = set()
         for led in self.leds:
-            if led.posicion in posiciones:
+            if led.posicion in posiciones and led.encendido == False:
                 ledsAEncender.add(led)
         return ledsAEncender
     
@@ -42,18 +46,21 @@ class Digito:
 
 
     def getPosicionesDeLedsAEncender(self, numeroARepresentar) -> set:
+        #falta filtrar aquellos leds que ya estan encendidos
         return Digito.mapaDigitosAPosicionesDeLeds[numeroARepresentar]
 
 
     def setLedsAEncenderYApagar(self, numeroARepresentar):
-        posicionesDeLedsEncendidos = {led.posicion for led in self.ledsAEncender}
-        posicionesDeLedsAEncender = self.getPosicionesDeLedsAEncender(numeroARepresentar)
+        
+        posicionesDeLedsEncendidos = {led.posicion for led in self.getLedsEncendidos()}
+        posicionesDeLedsAEncenderParaNumeroARepresentar = self.getPosicionesDeLedsAEncender(numeroARepresentar)
 
-        posicionesDeLedsAEncender = posicionesDeLedsAEncender.difference(posicionesDeLedsEncendidos)
-        posicionesDeLedsAApagar = posicionesDeLedsEncendidos.difference(posicionesDeLedsAEncender)
-
+        posicionesDeLedsAApagar = posicionesDeLedsEncendidos.difference(posicionesDeLedsAEncenderParaNumeroARepresentar)
+        posicionesDeLedsAEncender = posicionesDeLedsAEncenderParaNumeroARepresentar.difference(posicionesDeLedsEncendidos)
+        
         self.ledsAEncender = self.getLedsAEncender(posicionesDeLedsAEncender)
         self.ledsAApagar = self.getLedsAApagar(posicionesDeLedsAApagar)
+        return
 
 
     def encenderLeds(self):

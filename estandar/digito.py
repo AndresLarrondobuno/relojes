@@ -1,4 +1,4 @@
-from led import Led
+from estandar.led import Led
 
 class Digito:
     mapaDigitosACantidadLeds = {0:6, 1:2, 2:5, 3:5, 4:4, 5:5, 6:5, 7:3, 8:7, 9:5}
